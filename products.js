@@ -48,6 +48,14 @@ const products = [
         description: "In Stock • Ships in 1 day"
     },
     {
+        id: 7,
+        name: "Merino Wool Crew Sweater",
+        price: 420,
+        category: "Tops",
+        image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=800",
+        description: "Soft merino wool knit. Lightweight, warm, and perfect for layering."
+    },
+    {
         id: 8,
         name: "Urban Explorer Boots",
         price: 890,
