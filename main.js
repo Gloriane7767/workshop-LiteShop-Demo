@@ -38,6 +38,7 @@ function addToCart(productId) {
     // TODO: Add to cart array
     // TODO: Update cart count UI
     // TODO: Save to localStorage
+
 }
 
 // 5. Update Cart Count UI
@@ -47,10 +48,11 @@ function updateCartCount() {
 }
 
 // 6. Event Listeners
-// Search
+// Search  productGrid.innerHTML = productsToRender.map(product => `
 if (searchInput) {
     searchInput.addEventListener('input', (e) => {
         // TODO: Filter products by name or description
+
     });
 }
 
@@ -59,8 +61,16 @@ categoryFilters.forEach(filter => {
     filter.addEventListener('change', () => {
         // TODO: Collect active categories
         // TODO: Filter products and re-render
-    });
-});
+                const checked = [...categoryFilters].filter(cb => cb.checked).map(cb => cb.value);
+                if (checked.includes('all') || checked.length === 0) {
+                    renderProducts(products);
+                } else {
+                    const filtered = products.filter(p => checked.includes(p.category));
+                    renderProducts(filtered);
+                }
+            });
+        });
+
 
 // 7. Initial Load
 document.addEventListener('DOMContentLoaded', () => {
