@@ -10,7 +10,6 @@ const cartCount = document.getElementById('cart-count');
 const categoryFilters = document.querySelectorAll('.category-filter');
 
 // 3. Render Products Function
-// This ONE function replaces ALL those hardcoded <article> blocks
 function renderProducts(productsToRender) {
     productGrid.innerHTML = productsToRender.map(product => `
         <div class="group relative flex flex-col overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white p-2 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-900/10 hover:border-blue-400">
@@ -34,48 +33,46 @@ function renderProducts(productsToRender) {
 
 // 4. Add to Cart Function
 function addToCart(productId) {
-    // TODO: Find product by id
-    // TODO: Add to cart array
-    // TODO: Update cart count UI
-    // TODO: Save to localStorage
-
+    const product = products.find(p => p.id === productId);
+    cart.push(product);
+    updateCartCount();
 }
 
 // 5. Update Cart Count UI
 function updateCartCount() {
-    // TODO: Set textContent of cartCount
-    // TODO: Show/hide cartCount based on items
+    if (cartCount) {
+        cartCount.textContent = cart.length;
+    }
 }
 
 // 6. Event Listeners
-// Search  productGrid.innerHTML = productsToRender.map(product => `
 if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-        // TODO: Filter products by name or description
-
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        const filtered = products.filter(p =>
+            p.name.toLowerCase().includes(query) ||
+            p.description.toLowerCase().includes(query)
+        );
+        renderProducts(filtered);
     });
 }
 
 // Category Filters
 categoryFilters.forEach(filter => {
     filter.addEventListener('change', () => {
-        // TODO: Collect active categories
-        // TODO: Filter products and re-render
-                const checked = [...categoryFilters].filter(cb => cb.checked).map(cb => cb.value);
-                if (checked.includes('all') || checked.length === 0) {
-                    renderProducts(products);
-                } else {
-                    const filtered = products.filter(p => checked.includes(p.category));
-                    renderProducts(filtered);
-                }
-            });
-        });
+        const checked = [...categoryFilters].filter(cb => cb.checked).map(cb => cb.value);
+        if (checked.includes('all') || checked.length === 0) {
+            renderProducts(products);
+        } else {
+            const filtered = products.filter(p => checked.includes(p.category));
+            renderProducts(filtered);
+        }
+    });
+});
 
 
 // 7. Initial Load
 document.addEventListener('DOMContentLoaded', () => {
-    // TODO: Load cart from localStorage
-    // TODO: Update cart count UI
-    // TODO: Render all products initially
     renderProducts(products);
+    updateCartCount();
 });
